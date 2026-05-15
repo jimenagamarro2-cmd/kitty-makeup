@@ -1,0 +1,769 @@
+[kittyMakeup.html](https://github.com/user-attachments/files/27809373/kittyMakeup.html)
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitty Makeup</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f7abde;
+    color:#333;
+    overflow-x:hidden;
+    position:relative;
+}
+
+/* FONDO */
+
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:url('https://i.pinimg.com/736x/67/65/31/6765317c2d4f9e76a5ff9f0f2dbd55c9.jpg') center center/cover no-repeat;
+    opacity:0.08;
+    z-index:-1;
+}
+
+/* HEADER */
+
+header{
+    background:#ff69b4;
+    padding:15px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.logo{
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.menu{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#ffe4f1;
+}
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    font-size:50px;
+    color:#ff1493;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:20px;
+}
+
+/* PRODUCTOS */
+
+.productos{
+    padding:50px 20px;
+}
+
+.productos h2{
+    text-align:center;
+    margin-bottom:35px;
+    color:#ff1493;
+    font-size:40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:15px;
+    text-align:center;
+}
+
+.card-content h3{
+    margin-bottom:10px;
+}
+
+.precio{
+    color:#ff1493;
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+button{
+    background:#ff69b4;
+    border:none;
+    color:white;
+    padding:10px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#ff1493;
+}
+
+/* BOTÓN CARRITO */
+
+.carrito{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#ff69b4;
+    color:white;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    cursor:pointer;
+    z-index:3000;
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+
+.contador{
+    position:absolute;
+    top:5px;
+    right:5px;
+    background:rgb(230, 177, 177);
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    font-size:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* REDES */
+
+.red-social{
+    position:fixed;
+    left:20px;
+    width:70px;
+    height:70px;
+    background:white;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    z-index:3000;
+    transition:0.3s;
+}
+
+.red-social:hover{
+    transform:scale(1.1);
+}
+
+.red-social img{
+    width:42px;
+    height:42px;
+}
+
+.whatsapp{
+    bottom:110px;
+}
+
+.instagram{
+    bottom:200px;
+}
+
+/* PANEL */
+
+.panel-carrito{
+    position:fixed;
+    top:0;
+    right:-100%;
+    width:350px;
+    max-width:100%;
+    height:100%;
+    background:rgb(167, 206, 233);
+    box-shadow:-5px 0 15px rgba(0,0,0,0.2);
+    transition:0.4s;
+    padding:20px;
+    overflow-y:auto;
+    z-index:2000;
+}
+
+.panel-carrito.active{
+    right:0;
+}
+
+.cerrar{
+    float:right;
+    cursor:pointer;
+    font-size:25px;
+    color:red;
+}
+
+.lista-carrito{
+    margin-top:20px;
+    line-height:2;
+}
+
+/* FORMULARIO */
+
+.formulario{
+    margin-top:20px;
+}
+
+.formulario input{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border-radius:10px;
+    border:1px solid #cc9c9c;
+}
+
+/* CONTACTOS */
+
+.contactos{
+    padding:60px 20px;
+    text-align:center;
+}
+
+.contactos h2{
+    color:#e9b2cf;
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.contactos p{
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#f8abe5;
+    color:rgb(0, 0, 0);
+    text-align:center;
+    padding:25px;
+    margin-top:40px;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:35px;
+}
+
+.hero p{
+    font-size:16px;
+}
+
+.card img{
+    height:220px;
+}
+
+.menu{
+    justify-content:center;
+    margin-top:10px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<nav>
+
+<div class="logo">Kitty Makeup</div>
+
+<div class="menu">
+<a href="#inicio">Inicio</a>
+<a href="#productos">Productos</a>
+<a href="#contactos">Contactos</a>
+<a href="#carrito">Carrito</a>
+</div>
+
+</nav>
+
+</header>
+
+<!-- INICIO -->
+
+<section class="hero" id="inicio">
+
+<h1>Bienvenida a Kitty Makeup</h1>
+
+<p>
+Donde cada brocha despierta tu belleza y cada color refleja tu estilo ✨
+</p>
+
+</section>
+
+<!-- PRODUCTOS -->
+
+<section class="productos" id="productos">
+
+<h2>Nuestros Productos</h2>
+
+<div class="grid">
+
+<!-- PRODUCTO 1 -->
+<div class="card">
+<img src="img.jpg/img.jpg1.jpeg">
+<div class="card-content">
+<h3>Blender</h3>
+<div class="precio">Q10</div>
+<button onclick="agregarCarrito(10)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 2 -->
+<div class="card">
+<img src="img.jpg/img.jpg2.jpeg">
+<div class="card-content">
+<h3>Mascara De Pestañas</h3>
+<div class="precio">Q28</div>
+<button onclick="agregarCarrito(28)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 3 -->
+<div class="card">
+<img src="img.jpg/img.jpg3.jpeg">
+<div class="card-content">
+<h3>Primer ELF</h3>
+<div class="precio">Q80</div>
+<button onclick="agregarCarrito(80)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 4 -->
+<div class="card">
+<img src="img.jpg/img.jpg4.jpeg">
+<div class="card-content">
+<h3>Tinta</h3>
+<div class="precio">Q30</div>
+<button onclick="agregarCarrito(30)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 5 -->
+<div class="card">
+<img src="img.jpg/img.jpg5.jpeg">
+<div class="card-content">
+<h3>Fijador de Cejas</h3>
+<div class="precio">Q25</div>
+<button onclick="agregarCarrito(25)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 6 -->
+<div class="card">
+<img src="img.jpg/img.jpg6.jpeg">
+<div class="card-content">
+<h3>Iluminador Glow</h3>
+<div class="precio">Q130</div>
+<button onclick="agregarCarrito(130)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 7 -->
+<div class="card">
+<img src="img.jpg/img.jpg7.jpeg">
+<div class="card-content">
+<h3>Polvo Suelto</h3>
+<div class="precio">Q120</div>
+<button onclick="agregarCarrito(120)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 8 -->
+<div class="card">
+<img src="img.jpg/img.jpg8.jpeg">
+<div class="card-content">
+<h3>Rubor UR</h3>
+<div class="precio">Q80</div>
+<button onclick="agregarCarrito(80)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 9 -->
+<div class="card">
+<img src="img.jpg/img.jpg9.jpeg">
+<div class="card-content">
+<h3>Enchinador</h3>
+<div class="precio">Q40</div>
+<button onclick="agregarCarrito(40)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 10 -->
+<div class="card">
+<img src="img.jpg/img.jpg10.jpeg">
+<div class="card-content">
+<h3>Rubor PIXI</h3>
+<div class="precio">Q70</div>
+<button onclick="agregarCarrito(70)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 11 -->
+<div class="card">
+<img src="img.jpg/img.jpg12.jpeg">
+<div class="card-content">
+<h3>Mascara PROSA</h3>
+<div class="precio">Q35</div>
+<button onclick="agregarCarrito(35)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 12 -->
+<div class="card">
+<img src="img.jpg/img.jpg13.jpeg">
+<div class="card-content">
+<h3>Labial Nude</h3>
+<div class="precio">Q40</div>
+<button onclick="agregarCarrito(40)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 13 -->
+<div class="card">
+<img src="img.jpg/img.jpg14.jpeg">
+<div class="card-content">
+<h3>Tinta Pink</h3>
+<div class="precio">Q35</div>
+<button onclick="agregarCarrito(35)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 14 -->
+<div class="card">
+<img src="img.jpg/img.jpg15.jpeg">
+<div class="card-content">
+<h3>Gloss SHEGLAM</h3>
+<div class="precio">Q65</div>
+<button onclick="agregarCarrito(65)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 15 -->
+<div class="card">
+<img src="img.jpg/img.jpg16.jpeg">
+<div class="card-content">
+<h3>Rubor SHEGLAM</h3>
+<div class="precio">Q75</div>
+<button onclick="agregarCarrito(75)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 16 -->
+<div class="card">
+<img src="img.jpg/img.jpg17.jpeg">
+<div class="card-content">
+<h3>Sombras Nude</h3>
+<div class="precio">Q70</div>
+<button onclick="agregarCarrito(70)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 17 -->
+<div class="card">
+<img src="img.jpg/img.jpg18.jpeg">
+<div class="card-content">
+<h3>Corrector NARS</h3>
+<div class="precio">Q50</div>
+<button onclick="agregarCarrito(50)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 18 -->
+<div class="card">
+<img src="img.jpg/img.jpg19.jpeg">
+<div class="card-content">
+<h3>Set de Brochas</h3>
+<div class="precio">Q130</div>
+<button onclick="agregarCarrito(130)">Agregar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 19 -->
+<div class="card">
+<img src="img.jpg/img.jpg20.jpeg">
+<div class="card-content">
+<h3>Gloss KIKO</h3>
+<div class="precio">Q90</div>
+<button onclick="agregarCarrito(90)">Agregar</button>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- CONTACTOS -->
+
+<section class="contactos" id="contactos">
+
+<h2>Contáctanos</h2>
+
+<p>📱 WhatsApp: 4912-3928</p>
+
+<p>📸 Instagram: KittyMakeup_7</p>
+
+<p>💖 Gracias por visitar Kitty Makeup</p>
+
+</section>
+
+<!-- INSTAGRAM -->
+
+<a href="https://www.instagram.com/KittyMakeup_7"
+class="red-social instagram"
+target="_blank">
+
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+
+</a>
+
+<!-- WHATSAPP -->
+
+<a href="https://wa.me/50249123928"
+class="red-social whatsapp"
+target="_blank">
+
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+
+</a>
+
+<!-- BOTÓN CARRITO -->
+
+<div class="carrito" onclick="abrirCarrito()" id="carrito">
+
+🛒
+
+<div class="contador" id="contador">0</div>
+
+</div>
+
+<!-- PANEL CARRITO -->
+
+<div class="panel-carrito" id="panel">
+
+<span class="cerrar" onclick="cerrarCarrito()">✖</span>
+
+<h2>Tu Carrito</h2>
+
+<div class="lista-carrito">
+
+<h3>
+Cantidad de productos:
+<span id="cantidadProductos">0</span>
+</h3>
+
+<h3>
+Total:
+Q<span id="totalCarrito">0</span>
+</h3>
+
+</div>
+
+<!-- FORMULARIO -->
+
+<div class="formulario">
+
+<h3>Pagar</h3>
+
+<input type="text" id="nombre" placeholder="Nombre completo">
+
+<input type="text" id="tarjeta" placeholder="Número de tarjeta">
+
+<input type="text" id="fecha" placeholder="Fecha de vencimiento">
+
+<input type="password" id="cvv" placeholder="CVV">
+
+<button style="width:100%" onclick="validarPago()">
+Finalizar Compra
+</button>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+<h2>Kitty Makeup</h2>
+
+<p>Tu tienda favorita de maquillaje 💖</p>
+
+</footer>
+
+<script>
+
+let contador = 0;
+let total = 0;
+
+function agregarCarrito(precio){
+
+contador++;
+total += precio;
+
+document.getElementById("contador").innerText = contador;
+document.getElementById("cantidadProductos").innerText = contador;
+document.getElementById("totalCarrito").innerText = total;
+
+}
+
+function abrirCarrito(){
+
+document.getElementById("panel").classList.add("active");
+
+}
+
+function cerrarCarrito(){
+
+document.getElementById("panel").classList.remove("active");
+
+}
+
+function validarPago(){
+
+let nombre = document.getElementById("nombre");
+let tarjeta = document.getElementById("tarjeta");
+let fecha = document.getElementById("fecha");
+let cvv = document.getElementById("cvv");
+
+if(nombre.value === ""){
+alert("Ingresa tu nombre");
+return;
+}
+
+if(tarjeta.value === ""){
+alert("Ingresa tu tarjeta");
+return;
+}
+
+if(fecha.value === ""){
+alert("Ingresa la fecha");
+return;
+}
+
+if(cvv.value === ""){
+alert("Ingresa el CVV");
+return;
+}
+
+let codigo = "KM-" + Math.floor(100000 + Math.random() * 900000);
+
+document.body.innerHTML = `
+
+<div style="
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+background:#fff5f7;
+font-family:Arial;
+text-align:center;
+">
+
+<h1 style="
+color:#ff1493;
+font-size:60px;
+margin-bottom:30px;
+">
+✅ Pago con éxito
+</h1>
+
+<div style="
+background:#f3e5ff;
+color:#8a2be2;
+padding:25px 45px;
+border-radius:25px;
+font-size:32px;
+font-weight:bold;
+box-shadow:0 4px 15px rgba(0,0,0,0.2);
+">
+
+Código de verificación
+<br><br>
+
+${codigo}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
